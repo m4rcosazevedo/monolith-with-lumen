@@ -1,0 +1,26 @@
+version: '3'
+services:
+  customer:
+    container_name: customer
+    build: .
+    ports:
+      - "5004:80"
+    volumes:
+      - .:/var/www/html
+  customer-db:
+    container_name: customer-db
+    command: mysqld --character-set-server=utf8 --ssl=0 --collation-server=utf8_unicode_ci --init-connect='SET NAMES UTF8;' --innodb-flush-log-at-trx-commit=0
+    image: mysql:8.0.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=q0e8t6u4o
+      - MYSQL_USER=customer
+      - MYSQL_PASSWORD=customer
+      - MYSQL_DATABASE=customer
+    ports:
+      - "8000:3306"
+    volumes:
+      - /var/docker/volumes/customer-db:/var/lib/mysql
+networks:
+  default:
+    external:
+      name: internal
