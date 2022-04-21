@@ -13,6 +13,9 @@ class Role extends Model
 {
     use Filterable;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'description',
     ];

@@ -7,6 +7,14 @@ $router->get('/', function () use ($router) {
 });
 
 // $router->group(['middleware' => 'auth'], function ($router) {
+    $router->group(['prefix' => 'permission'], function ($route) {
+        $route->get('/', 'PermissionController@index');
+        $route->post('/', 'PermissionController@store');
+        $route->get('/{id}', 'PermissionController@show');
+        $route->put('/{id}', 'PermissionController@update');
+        $route->delete('/{id}', 'PermissionController@destroy');
+    });
+
     $router->group(['prefix' => 'role'], function ($route) {
         $route->get('/', 'RoleController@index');
         $route->post('/', 'RoleController@store');
@@ -15,11 +23,11 @@ $router->get('/', function () use ($router) {
         $route->delete('/{id}', 'RoleController@destroy');
     });
 
-    $router->group(['prefix' => 'permission'], function ($route) {
-        $route->get('/', 'PermissionController@index');
-        $route->post('/', 'PermissionController@store');
-        $route->get('/{id}', 'PermissionController@show');
-        $route->put('/{id}', 'PermissionController@update');
-        $route->delete('/{id}', 'PermissionController@destroy');
+    $router->group(['prefix' => 'user'], function ($route) {
+        $route->get('/', 'UserController@index');
+        $route->post('/', 'UserController@store');
+        $route->get('/{id}', 'UserController@show');
+        $route->put('/{id}', 'UserController@update');
+        $route->delete('/{id}', 'UserController@destroy');
     });
 // });

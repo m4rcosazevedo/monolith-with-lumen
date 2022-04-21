@@ -17,10 +17,9 @@ class UsersSeeder extends Seeder {
         $this->users = [
             [
                 "id" => 1,
-                "firstname" => "Marcos",
-                "lastname" => "P C Azevedo",
+                "name" => "Marcos P C Azevedo",
                 "email" => "marcos.workspace@gmail.com",
-                "password" => "123456",
+                "password" => "h#o6Q3w@",
             ]
         ];
 

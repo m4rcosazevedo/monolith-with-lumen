@@ -18,7 +18,7 @@ class PermissionRequest extends FormRequest
     {
         return [
             'description' => 'required',
-            'permission' => 'required'
+            'permission' => 'required|unique:permissions'
         ];
     }
 
