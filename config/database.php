@@ -19,4 +19,8 @@ return [
     ],
 
     'migrations' => 'migrations',
+
+    'paginate' => [
+        "limit" => env('DB_PAGINATE', 15)
+    ]
 ];

@@ -6,7 +6,9 @@
     "type": "project",
     "require": {
         "php": "^8.0",
-        "laravel/lumen-framework": "^8.3.4",
+        "anik/form-request": "^4.4",
+        "darkaonline/swagger-lume": "8.*",
+        "laravel/lumen-framework": "^v9.0.2",
         "leandreaci/filterable": "^1.2.1"
     },
     "require-dev": {

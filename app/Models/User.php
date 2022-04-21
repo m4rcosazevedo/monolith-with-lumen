@@ -8,10 +8,11 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Lumen\Auth\Authorizable;
+use Leandreaci\Filterable\Filterable;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable, HasFactory;
+    use Authenticatable, Authorizable, HasFactory, Filterable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +33,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     public function roles () {
-        return $this->belongsToMany('App\Models\Role');
+        return $this->belongsToMany(Role::class);
     }
 }
