@@ -6,7 +6,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-// $router->group(['middleware' => 'auth'], function ($router) {
+$router->group(['middleware' => 'auth'], function ($router) {
     $router->group(['prefix' => 'permission'], function ($route) {
         $route->get('/', 'PermissionController@index');
         $route->post('/', 'PermissionController@store');
@@ -30,4 +30,11 @@ $router->get('/', function () use ($router) {
         $route->put('/{id}', 'UserController@update');
         $route->delete('/{id}', 'UserController@destroy');
     });
-// });
+});
+
+$router->group(['prefix' => 'auth'], function ($router) {
+    $router->post('login', 'AuthController@login');
+    $router->post('logout', 'AuthController@logout');
+    $router->post('refresh', 'AuthController@refresh');
+    $router->post('user-profile', 'AuthController@me');
+});

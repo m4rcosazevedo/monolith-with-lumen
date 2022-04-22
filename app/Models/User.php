@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
+use App\Http\Resources\UsersResource;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Auth\Authorizable;
 use Leandreaci\Filterable\Filterable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * @OA\Schema()
  */
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
     use Authenticatable, Authorizable, HasFactory, Filterable;
 
@@ -57,7 +60,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @OA\Property(format="password")
      * @var string
      */
-    private $password;
 
     /**
      * @OA\Property(property="roles", type="array",
@@ -76,5 +78,25 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function setPasswordAttribute(string $password)
     {
         $this->attributes['password'] = Hash::make($password);
+    }
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

@@ -8,8 +8,9 @@
         "php": "^8.0",
         "anik/form-request": "^4.4",
         "darkaonline/swagger-lume": "8.*",
-        "laravel/lumen-framework": "^v9.0.2",
-        "leandreaci/filterable": "^1.2.1"
+        "laravel/lumen-framework": "^v8.3.4",
+        "leandreaci/filterable": "^1.2.1",
+        "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
         "fakerphp/faker": "^1.19.0",
