@@ -2,33 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AuthLoginRequest;
+use App\Http\Resources\AuthResource;
 use App\Http\Resources\UsersResource;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use  App\Models\User;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'refresh', 'logout']]);
+        $this->middleware(
+            'auth:api', [
+                'except' => [
+                    'login'
+                ]
+            ]
+        );
     }
 
     /**
-     * Get a JWT via given credentials.
-     *
-     * @param  Request  $request
+     * @OA\Post (path="/auth/login", tags={"Auth"},
+     *     @OA\Parameter (name="email", in="query", required=false),
+     *     @OA\Parameter (name="password", in="query", required=false),
+     *     @OA\Response (response="200", description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/AuthResource")
+     *     ),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     * @param  AuthLoginRequest  $request
      * @return JsonResponse
      */
-    public function login(Request $request)
+    public function login(AuthLoginRequest $request)
     {
-
-        $this->validate($request, [
-            'email' => 'required|string',
-            'password' => 'required|string',
-        ]);
-
         $credentials = $request->only(['email', 'password']);
 
         if (! $token = Auth::attempt($credentials)) {
@@ -39,17 +45,35 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
+     *
+     * @OA\Post(path="/auth/me", tags={"Auth"},
+     *     @OA\Response(response=200, description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/UsersResource")
+     *     ),
+     *     @OA\Response(response=400, description="Bad Request"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Resource Not Found")
+     * )
      *
      * @return JsonResponse
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json(UsersResource::make(auth()->user()));
     }
 
     /**
-     * Log the user out (Invalidate the token).
+     *
+     * @OA\Post(path="/auth/logout", tags={"Auth"},
+     *     @OA\Response (response="200", description="Successful operation",
+     *         @OA\JsonContent(@OA\Property (property="message", example="Successfully logged out"))
+     *     ),
+     *     @OA\Response(response=400, description="Bad Request"),
+     *     @OA\Response(response=401, description="Unauthenticated"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="Resource Not Found")
+     * )
      *
      * @return JsonResponse
      */
@@ -61,7 +85,12 @@ class AuthController extends Controller
     }
 
     /**
-     * Refresh a token.
+     * @OA\Post (path="/auth/refresh", tags={"Auth"},
+     *     @OA\Response (response="200", description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/AuthResource")
+     *     ),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
      *
      * @return JsonResponse
      */
@@ -74,7 +103,6 @@ class AuthController extends Controller
      * Get the token array structure.
      *
      * @param  string $token
-     *
      * @return JsonResponse
      */
     protected function respondWithToken($token)
@@ -82,7 +110,6 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            // 'user' => UsersResource::make(Auth::user()),
             'expires_in' => auth()->factory()->getTTL() * 60 * 24
         ]);
     }

@@ -12,9 +12,7 @@ class Controller extends BaseController
      * @OA\Info(
      *      version="0.0.1",
      *      title="Account Documentation",
-     *      @OA\Contact(
-     *          email="marcos.workspace@gmail.com"
-     *      )
+     *      @OA\Contact(email="marcos.workspace@gmail.com", name="Marcos Azevedo")
      * )
      */
 

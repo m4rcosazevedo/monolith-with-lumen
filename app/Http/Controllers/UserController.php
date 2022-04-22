@@ -9,7 +9,6 @@ use App\Http\Resources\UsersResource;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
