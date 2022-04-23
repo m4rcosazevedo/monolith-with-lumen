@@ -14,33 +14,15 @@ class PermissionHasRolesSeeder extends Seeder {
      */
     public function run ()
     {
-        $this->permissionHasRoles = [
-            [
-                "role_id" => 1,
-                "permission_id" => 1
-            ],
-            [
-                "role_id" => 1,
-                "permission_id" => 2
-            ],
-            [
-                "role_id" => 1,
-                "permission_id" => 3
-            ],
-            [
-                "role_id" => 1,
-                "permission_id" => 4
-            ],
-            [
-                "role_id" => 1,
-                "permission_id" => 5
-            ],
-            [
-                "role_id" => 2,
-                "permission_id" => 1
-            ],
+        $this->adminPermissions = [
+            1, 2, 3, 4, 5, // permission permissions
+            6, 7, 8, 9, 10, // role permissions
+            11, 12, 13, 14, 15 // user permissions
         ];
 
-        Role::find(1)->permissions()->attach($this->permissionHasRoles);
+        $this->managerPermissions = [1, 2, 6, 7, 11, 12];
+
+        Role::find(1)->permissions()->sync($this->adminPermissions);
+        Role::find(2)->permissions()->sync($this->managerPermissions);
     }
 }
