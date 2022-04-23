@@ -29,8 +29,7 @@ class UserController extends Controller
      * @return JsonResource
      */
     public function index (UserFilter $filter): JsonResource {
-        can('product_index');
-
+        can('user_index');
         return UsersResource::collection($this->paginate(User::filter($filter)));
     }
 
@@ -53,6 +52,7 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request): JsonResource
     {
+        can('user_store');
         $params = $request->validated();
 
         $user = User::create([
@@ -82,6 +82,7 @@ class UserController extends Controller
      */
     public function show(int $id): JsonResource
     {
+        can('user_show');
         return UsersResource::make($this->getUser($id));
     }
 
@@ -107,6 +108,7 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, int $id): JsonResource
     {
+        can('user_update');
         $user = $this->getUser($id);
 
         $params = $request->validated();
@@ -135,6 +137,7 @@ class UserController extends Controller
      */
     public function destroy (int $id)
     {
+        can('user_destroy');
         $user = $this->getUser($id);
         $user->delete();
         return UsersResource::collection($this->paginate(User::query()));

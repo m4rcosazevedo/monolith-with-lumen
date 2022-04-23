@@ -27,6 +27,7 @@ class RoleController extends Controller
      * @return JsonResource
      */
     public function index (RoleFilter $filter): JsonResource {
+        can('role_index');
         return RolesResource::collection($this->paginate(Role::filter($filter)));
     }
 
@@ -49,6 +50,7 @@ class RoleController extends Controller
      */
     public function store(RoleRequest $request): JsonResource
     {
+        can('role_store');
         $role = Role::create($request->all());
         $this->syncPermissions($role, $request);
         return RolesResource::make($role);
@@ -72,6 +74,7 @@ class RoleController extends Controller
      */
     public function show(int $id): JsonResource
     {
+        can('role_show');
         return RolesResource::make($this->getRole($id));
     }
 
@@ -97,6 +100,7 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, int $id): JsonResource
     {
+        can('role_update');
         $role = $this->getRole($id);
         $role->update($request->all());
         $this->syncPermissions($role, $request);
@@ -121,6 +125,7 @@ class RoleController extends Controller
      */
     public function destroy (int $id)
     {
+        can('role_destroy');
         $role = $this->getRole($id);
         $role->delete();
         return RolesResource::collection($this->paginate(Role::query()));

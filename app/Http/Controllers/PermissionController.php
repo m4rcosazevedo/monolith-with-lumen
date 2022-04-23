@@ -29,6 +29,7 @@ class PermissionController extends Controller
      * @return JsonResource
      */
     public function index (PermissionFilter $filter): JsonResource {
+        can('permission_index');
         return PermissionsResource::collection(
             $this->paginate(Permission::filter($filter))
         );
@@ -53,6 +54,7 @@ class PermissionController extends Controller
      */
     public function store(PermissionStoreRequest $request): JsonResource
     {
+        can('permission_store');
         return PermissionsResource::make(Permission::create($request->all()));
     }
 
@@ -74,6 +76,7 @@ class PermissionController extends Controller
      */
     public function show(int $id): JsonResource
     {
+        can('permission_show');
         return PermissionsResource::make($this->getPermission($id));
     }
 
@@ -99,6 +102,7 @@ class PermissionController extends Controller
      */
     public function update(PermissionUpdateRequest $request, int $id): JsonResource
     {
+        can('permission_update');
         $permission = $this->getPermission($id);
         $permission->update($request->all());
 
@@ -122,6 +126,7 @@ class PermissionController extends Controller
      */
     public function destroy (int $id)
     {
+        can('permission_destroy');
         $permission = $this->getPermission($id);
         $permission->delete();
         return PermissionsResource::collection($this->paginate(Permission::query()));
