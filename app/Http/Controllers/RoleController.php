@@ -6,12 +6,13 @@ use App\Filters\RoleFilter;
 use App\Http\Requests\RoleRequest;
 use App\Http\Resources\RolesResource;
 use App\Models\Role;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RoleController extends Controller
 {
     /**
-     * @OA\Get (path="/role", tags={"Role"},
+     * @OA\Get (path="/role", tags={"Role"}, security={{ "Bearer":{} }},
      *     @OA\Parameter (name="description", in="query", required=false),
      *     @OA\Parameter (name="page", in="query", required=false, example=1, @OA\Schema(type="integer")),
      *     @OA\Parameter (name="limit", in="query", required=false, example=15, @OA\Schema(type="integer")),
@@ -30,7 +31,7 @@ class RoleController extends Controller
     }
 
     /**
-     * @OA\Post(path="/role", tags={"Role"},
+     * @OA\Post(path="/role", tags={"Role"}, security={{ "Bearer":{} }},
      *      @OA\RequestBody(required=true,
      *          @OA\JsonContent(ref="#/components/schemas/RoleRequest")
      *      ),
@@ -55,7 +56,7 @@ class RoleController extends Controller
 
     /**
      *
-     * @OA\Get(path="/role/{id}", tags={"Role"},
+     * @OA\Get(path="/role/{id}", tags={"Role"}, security={{ "Bearer":{} }},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=200, description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/RolesResource")
@@ -75,7 +76,7 @@ class RoleController extends Controller
     }
 
     /**
-     * @OA\Put(path="/role/{id}", tags={"Role"},
+     * @OA\Put(path="/role/{id}", tags={"Role"}, security={{ "Bearer":{} }},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\RequestBody(required=true,
      *         @OA\JsonContent(ref="#/components/schemas/RoleRequest")
@@ -104,7 +105,7 @@ class RoleController extends Controller
     }
 
     /**
-     * @OA\Delete(path="/role/{id}", tags={"Role"},
+     * @OA\Delete(path="/role/{id}", tags={"Role"}, security={{ "Bearer":{} }},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response (response="200", description="Successful operation",
      *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/RolesResource"))
@@ -116,7 +117,7 @@ class RoleController extends Controller
      * )
      *
      * @param int $id
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @return AnonymousResourceCollection
      */
     public function destroy (int $id)
     {

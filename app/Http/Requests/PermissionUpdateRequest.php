@@ -7,7 +7,7 @@ use Anik\Form\FormRequest;
 /**
  * @OA\Schema()
  */
-class PermissionRequest extends FormRequest
+class PermissionUpdateRequest extends FormRequest
 {
 
     /**
@@ -18,7 +18,7 @@ class PermissionRequest extends FormRequest
     {
         return [
             'description' => 'required',
-            'permission' => 'required|unique:permissions'
+            'permission' => 'required'
         ];
     }
 

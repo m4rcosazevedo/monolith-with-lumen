@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Laravel\Lumen\Routing\Controller as BaseController;
-use Illuminate\Database\Eloquent\Model;
 
 class Controller extends BaseController
 {
@@ -13,6 +11,20 @@ class Controller extends BaseController
      *      version="0.0.1",
      *      title="Account Documentation",
      *      @OA\Contact(email="marcos.workspace@gmail.com", name="Marcos Azevedo")
+     * )
+     *
+     * @OA\Server (
+     *      url="/"
+     * )
+     */
+
+    /**
+     * @OA\SecurityScheme(
+     *     scheme="bearer",
+     *     securityScheme="Bearer",
+     *     type="http",
+     *     in="header",
+     *     name="Authorization",
      * )
      */
 

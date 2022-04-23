@@ -13,7 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class UserController extends Controller
 {
     /**
-     * @OA\Get (path="/user", tags={"User"},
+     * @OA\Get (path="/user", tags={"User"}, security={{ "Bearer":{} }},
      *     @OA\Parameter (name="name", in="query", required=false),
      *     @OA\Parameter (name="email", in="query", required=false),
      *     @OA\Parameter (name="page", in="query", required=false, example=1, @OA\Schema(type="integer")),
@@ -29,11 +29,13 @@ class UserController extends Controller
      * @return JsonResource
      */
     public function index (UserFilter $filter): JsonResource {
+        can('product_index');
+
         return UsersResource::collection($this->paginate(User::filter($filter)));
     }
 
     /**
-     * @OA\Post(path="/user", tags={"User"},
+     * @OA\Post(path="/user", tags={"User"}, security={{ "Bearer":{} }},
      *      @OA\RequestBody(required=true,
      *          @OA\JsonContent(ref="#/components/schemas/UserStoreRequest")
      *      ),
@@ -64,7 +66,7 @@ class UserController extends Controller
 
     /**
      *
-     * @OA\Get(path="/user/{id}", tags={"User"},
+     * @OA\Get(path="/user/{id}", tags={"User"}, security={{ "Bearer":{} }},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(response=200, description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/UsersResource")
@@ -84,7 +86,7 @@ class UserController extends Controller
     }
 
     /**
-     * @OA\Put(path="/user/{id}", tags={"User"},
+     * @OA\Put(path="/user/{id}", tags={"User"}, security={{ "Bearer":{} }},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\RequestBody(required=true,
      *         @OA\JsonContent(ref="#/components/schemas/UserUpdateRequest")
@@ -117,7 +119,7 @@ class UserController extends Controller
     }
 
     /**
-     * @OA\Delete(path="/user/{id}", tags={"User"},
+     * @OA\Delete(path="/user/{id}", tags={"User"}, security={{ "Bearer":{} }},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response (response="200", description="Successful operation",
      *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/UsersResource"))

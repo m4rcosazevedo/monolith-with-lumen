@@ -62,6 +62,7 @@ $app->singleton(
 $app->configure('app');
 $app->configure('auth');
 $app->configure('jwt');
+$app->configure('helpers');
 $app->configure('swagger-lume');
 
 /*
@@ -77,6 +78,7 @@ $app->configure('swagger-lume');
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
+    'role' => App\Http\Middleware\RoleMiddleware::class,
 ]);
 
 /*
@@ -97,6 +99,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Anik\Form\FormRequestServiceProvider::class);
 $app->register(SwaggerLume\ServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(App\Providers\PermissionsServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

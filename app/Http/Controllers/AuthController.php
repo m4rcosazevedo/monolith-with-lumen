@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthLoginRequest;
-use App\Http\Resources\AuthResource;
 use App\Http\Resources\UsersResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +45,7 @@ class AuthController extends Controller
 
     /**
      *
-     * @OA\Post(path="/auth/me", tags={"Auth"},
+     * @OA\Post(path="/auth/me", tags={"Auth"}, security={{ "Bearer":{} }},
      *     @OA\Response(response=200, description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/UsersResource")
      *     ),
@@ -65,7 +64,7 @@ class AuthController extends Controller
 
     /**
      *
-     * @OA\Post(path="/auth/logout", tags={"Auth"},
+     * @OA\Post(path="/auth/logout", tags={"Auth"}, security={{ "Bearer":{} }},
      *     @OA\Response (response="200", description="Successful operation",
      *         @OA\JsonContent(@OA\Property (property="message", example="Successfully logged out"))
      *     ),
@@ -85,7 +84,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @OA\Post (path="/auth/refresh", tags={"Auth"},
+     * @OA\Post (path="/auth/refresh", tags={"Auth"}, security={{ "Bearer":{} }},
      *     @OA\Response (response="200", description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/AuthResource")
      *     ),
