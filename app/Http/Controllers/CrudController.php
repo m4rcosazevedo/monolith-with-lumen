@@ -34,12 +34,18 @@ class CrudController extends Controller
 
     public function store(Request $request): JsonResource
     {
-        $this->validate($request, [
-            'title' => 'required|max:64'
-        ]);
+        $this->beforeSave();
+        $model = $this->modelFactory()->create($request->all());
+        $this->afterSave();
+        return $this->resourceFactory()->make($model);
+    }
 
-        $model = $this->modelFactory()->create($request->only('title'));
-
+    public function update(Request $request, int $id): JsonResource
+    {
+        $this->beforeUpdate();
+        $model = $this->modelFactory()->findOrFail($id);
+        $model->update($request->all());
+        $this->afterUpdate();
         return $this->resourceFactory()->make($model);
     }
 
@@ -74,4 +80,11 @@ class CrudController extends Controller
     {
         return new \ReflectionClass($name);
     }
+
+    public function beforeSave () { }
+    public function afterSave () { }
+
+    public function beforeUpdate () { }
+    public function afterUpdate () { }
+
 }
